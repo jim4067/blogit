@@ -34,6 +34,13 @@ test("the number of blogs returned should be two", async () => {
     expect(response.body).toHaveLength(2);
 });
 
+// a test that verifies that the unique identifier property of the blog posts is named id,
+// by default the database names the property _id
+test("the unique identifier is named id", async () => {
+    const response = await api.get('/api/blogs');
+
+    expect(response.body[1].id).toBeDefined();
+});
 afterAll(() => {
     mongoose.connection.close();
 });
