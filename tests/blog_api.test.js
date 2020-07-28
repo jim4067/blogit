@@ -81,6 +81,18 @@ test("the default numbers of likes returned should be zero", async () => {
 
     expect(blog_likes[blog_likes.length-1]).toBe(0);
 });
+
+//a test related to creating new blogs via the /api/blogs endpoint, 
+//that verifies the title and url properties aren't missing
+test("if title and the the url are missing a 400 status code should be returned", async () => {
+    const blog_object = new Blog({
+        author: "@jim4067"
+    });
+
+    await blog_object.save();
+    expect(400);
+
+});
 afterAll(() => {
     mongoose.connection.close();
 });
