@@ -58,8 +58,28 @@ test("testing that HTTP post works as expected", async () => {
              .expect(200);
              */
 
-    const response = await api.get('/api/blogs')
+    const response = await api.get('/api/blogs');
+    const blog_titles = response.body.map(item => item.title);
+
     expect(response.body).toHaveLength(initial_blogs.length + 1);
+    expect(blog_titles).toContain("Canonical string reduction");
+});
+
+// a test that verifies that if the likes property is missing from the request, 
+//it will default to the value 0
+test("the default numbers of likes returned should be zero", async () => {
+    const blog_object = new Blog({
+        title: "testing the likes",
+        author: "@jim4067",
+        url: "https://github.com/jim4067",
+    });
+
+    await blog_object.save();
+
+    const response = await api.get('/api/blogs');
+    const blog_likes = response.body.map(items => items.likes);
+
+    expect(blog_likes[blog_likes.length-1]).toBe(0);
 });
 afterAll(() => {
     mongoose.connection.close();
