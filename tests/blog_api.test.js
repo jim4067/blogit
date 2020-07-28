@@ -46,9 +46,9 @@ test("the unique identifier is named id", async () => {
 // successfully creates a new blog post
 test("testing that HTTP post works as expected", async () => {
     const blog_object = new Blog({
-        title: "Canonical string reduction", 
-        author: "Edsger W. Dijkstra", 
-        url: "http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html", 
+        title: "Canonical string reduction",
+        author: "Edsger W. Dijkstra",
+        url: "http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html",
         likes: 12
     });
 
@@ -79,7 +79,7 @@ test("the default numbers of likes returned should be zero", async () => {
     const response = await api.get('/api/blogs');
     const blog_likes = response.body.map(items => items.likes);
 
-    expect(blog_likes[blog_likes.length-1]).toBe(0);
+    expect(blog_likes[blog_likes.length - 1]).toBe(0);
 });
 
 //a test related to creating new blogs via the /api/blogs endpoint, 
@@ -93,6 +93,7 @@ test("if title and the the url are missing a 400 status code should be returned"
     expect(400);
 
 });
+
 afterAll(() => {
     mongoose.connection.close();
 });
