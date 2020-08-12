@@ -17,7 +17,6 @@ const favorite_blog = (blogs) => {
     };
 }
 
-
 module.exports = {
     dummy,
     total_likes,
