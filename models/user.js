@@ -9,7 +9,10 @@ const user_schema = mongoose.Schema({
         unique : true
     },
     name : String,
-    password_hash : String,
+    password_hash :{
+        required : true,
+        type :  String,
+    },
     blogs : [
         {
             type: mongoose.Schema.Types.ObjectId,
