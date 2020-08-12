@@ -24,7 +24,7 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 app.use('/api/blogs', blog_router)
-app.use('api/users', user_router);
+app.use('/api/users', user_router);
 
 app.use(middleware.unknown_endpoint);
 app.use(middleware.error_handler);
