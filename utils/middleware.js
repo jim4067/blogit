@@ -1,5 +1,6 @@
 const logger = require('./logger');
 
+/* annoyingly not working as expected
 const request_logger = (req, res, next) => {
     logger.info("Method", req.method)
     logger.info("Path", req.path)
@@ -7,6 +8,7 @@ const request_logger = (req, res, next) => {
     logger.info("-------")
     next()
 }
+*/
 
 const unknown_endpoint = (req, res) => {
     res.status(400).send({error: "unknwown endpoint"})
@@ -25,7 +27,6 @@ const error_handler = (err, req, res, next) => {
 }
 
 module.exports = {
-    request_logger,
     unknown_endpoint,
     error_handler
 }
