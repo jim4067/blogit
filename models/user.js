@@ -5,18 +5,20 @@ mongoose.set('useCreateIndex', true);
 
 const user_schema = mongoose.Schema({
     username: {
+        minlength: 3,
+        required: true,
         type: String,
-        unique : true
+        unique: true
     },
-    name : String,
-    password_hash :{
-        required : true,
-        type :  String,
+    name: String,
+    password_hash: {
+        required: true,
+        type: String,
     },
-    blogs : [
+    blogs: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref : 'Blog'
+            ref: 'Blog'
         }
     ]
 });
@@ -24,7 +26,7 @@ const user_schema = mongoose.Schema({
 user_schema.plugin(unique_validator);
 
 user_schema.set('toJSON', {
-    transform : (document, returned_object) => {
+    transform: (document, returned_object) => {
         returned_object.id = returned_object._id.toString();
         delete returned_object._id;
         delete returned_object.__v;
@@ -32,6 +34,6 @@ user_schema.set('toJSON', {
     }
 });
 
-const User = mongoose.model('User' , user_schema );
+const User = mongoose.model('User', user_schema);
 
 module.exports = User;
