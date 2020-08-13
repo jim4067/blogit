@@ -95,7 +95,7 @@ blog_router.delete('/:id', async (req, res) => {
     const user = await User.findById(decoded_id.id);
 
     if (user._id.toString() && blog.user.id.toString()) {
-        await Blog.findByIdAndDelete(blog._id);
+        await Blog.findByIdAndDelete(blog._id);                  //if still errors try mongoose.remove()
         res.status(204).end();
     } else {
         //console.log("decoded id....", decoded_id)             //so this returns what is expected
