@@ -94,12 +94,12 @@ blog_router.delete('/:id', async (req, res) => {
     const blog = await Blog.findById(id);
     const user = await User.findById(decoded_id.id);
 
-    if (user._id.toString() && blog.user.id.toString()) {
+    if (user._id.toString() === blog.user._id.toString()) {         //so beginning this line with blog.user.id caused the bug
         await Blog.findByIdAndDelete(blog._id);                  //if still errors try mongoose.remove()
         res.status(204).end();
     } else {
-        //console.log("decoded id....", decoded_id)             //so this returns what is expected
-        console.log("the blog.user.id", blog.user.id);
+        //console.log("decoded id....", decoded_id)             //returns what is expected
+        console.log("the blog.user._id", blog.user._id);
         console.log("the user._id", user._id);
         res.status(500).end();
     }
