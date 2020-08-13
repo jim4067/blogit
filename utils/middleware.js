@@ -29,11 +29,9 @@ const error_handler = (err, req, res, next) => {
 }
 
 const token_extractor = (req, res, next) => {
-    let token;
-    const authorization = req.headers.authorization;
+    const authorization = req.get('authorization');
     if(authorization && authorization.toLowerCase().startsWith('bearer ')){
-        token = authorization.substring(7);
-        return token;
+        req.token = authorization.substring(7);
     }
     return null;
    
