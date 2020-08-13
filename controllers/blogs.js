@@ -4,8 +4,6 @@ const Blog = require('../models/blog');
 const middleware = require('../utils/middleware');
 const User = require('../models/user');
 
-//blog_router.use(middleware.token_extractor);     //remove this
-
 blog_router.get('/', async (req, res) => {
     const fetched_blogs = await Blog.find({})
         .populate('user', { username: 1, name: 1 });
@@ -67,12 +65,12 @@ blog_router.put('/:id', async (req, res) => {
     const id = req.params.id;
     const body = req.body;
 
-    const blog = {
-        title : body.title,
-        author : body.author,
-        url : body.url,
-        likes : body.likes,
-        user : body._user
+    const blog = {                              //incase of errors with put -> start here
+        title: body.title,
+        author: body.author,
+        url: body.url,
+        likes: body.likes,
+        user: body._user                        //suspicious about this. Is it body._user || body.user
     }
 
     const updated_blog = await Blog.findByIdAndUpdate(id, blog, { new: true });
@@ -81,26 +79,28 @@ blog_router.put('/:id', async (req, res) => {
 
 blog_router.delete('/:id', async (req, res) => {
     const id = req.params.id;
-    
+
     const token = get_token_from(req);
-    if(!token){
-        res.status(401).json({error : "token missing"});
+    if (!token) {
+        res.status(401).json({ error: "token missing" });
     }
 
     const decoded_id = jwt.verify(token, process.env.SECRET);
-    if(!decoded_id){
-        res.status(401).json({error : "invalid token"});
+    if (!decoded_id) {
+        res.status(401).json({ error: "invalid token" });
     }
-    
+
     const blog = await Blog.findById(id);
-    const user_id = await User.findById(decoded_id.id);
-    
-    if(blog.user.id.toString() === user_id.toString()){             //add that undescore here
+    const user = await User.findById(decoded_id.id);
+
+    if (user._id.toString() && blog.user.id.toString()) {
         await Blog.findByIdAndDelete(blog._id);
         res.status(204).end();
     } else {
-        console.log("decoded id....",decoded_id)
-        res.status(404).end();
+        //console.log("decoded id....", decoded_id)             //so this returns what is expected
+        console.log("the blog.user.id",blog.user.id);
+        console.log("the user._id", user._id);
+        res.status(500).end();
     }
 });
 
