@@ -1,10 +1,10 @@
 POST  http://localhost:3030/api/blogs
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImppbV80MDY3IiwiaWQiOiI1ZjM1Mzk1ZWVmOTg1YTA0MjgwYWU1MWIiLCJpYXQiOjE1OTczMjM2NjR9.TvDc6s5ttctFcmRoH5THpYNFbcgCEkYT8CmFIo0NNGo
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImppbV80MDY3IiwiaWQiOiI1ZjM1Mzk1ZWVmOTg1YTA0MjgwYWU1MWIiLCJpYXQiOjE1OTczNTI0MDZ9.bYFyvs5JlrgkVJJcIHeVWZZup9IYdrkfOT9LNCjET-k
 
 {
 	"title": "this is a test blog",
-	"author": "me",
+	"author": "me_jim",
 	"url": "https://test.com",
 	"likes": 43
 }
