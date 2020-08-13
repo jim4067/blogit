@@ -28,7 +28,8 @@ app.use('/api/blogs', blog_router);
 app.use('/api/login', login_router);
 app.use('/api/users', user_router);
 
-app.use(middleware.unknown_endpoint);
+app.use(middleware.token_extractor);
 app.use(middleware.error_handler);
+app.use(middleware.unknown_endpoint);
 
 module.exports = app;
