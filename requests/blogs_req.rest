@@ -1,10 +1,10 @@
 POST  http://localhost:3030/api/blogs
-
 Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImppbV80MDY3IiwiaWQiOiI1ZjM1Mzk1ZWVmOTg1YTA0MjgwYWU1MWIiLCJpYXQiOjE1OTczMjM2NjR9.TvDc6s5ttctFcmRoH5THpYNFbcgCEkYT8CmFIo0NNGo
+
 {
 	"title": "this is a test blog",
 	"author": "me",
 	"url": "https://test.com",
-	"likes": 43,
-	"user_id": "5f33feef3065530d0e857fe3"
+	"likes": 43
 }
