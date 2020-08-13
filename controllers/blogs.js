@@ -1,12 +1,13 @@
 const jwt = require('jsonwebtoken');
 const blog_router = require('express').Router();
 const Blog = require('../models/blog');
-const middleware = require('../utils/middleware');
 const User = require('../models/user');
 
 blog_router.get('/', async (req, res) => {
-    const fetched_blogs = await Blog.find({})
+    const fetched_blogs = await Blog
+        .find({})
         .populate('user', { username: 1, name: 1 });
+
     res.json(fetched_blogs);
 });
 
@@ -98,7 +99,7 @@ blog_router.delete('/:id', async (req, res) => {
         res.status(204).end();
     } else {
         //console.log("decoded id....", decoded_id)             //so this returns what is expected
-        console.log("the blog.user.id",blog.user.id);
+        console.log("the blog.user.id", blog.user.id);
         console.log("the user._id", user._id);
         res.status(500).end();
     }
