@@ -35,8 +35,9 @@ const get_token_from = req => {
 
 blog_router.post('/', async (req, res) => {
     const body = req.body;
+    const token = req.token;
 
-    const decoded_token = jwt.verify(req.token, process.env.SECRET);
+    const decoded_token = jwt.verify(token, process.env.SECRET);
 
     console.log("the token is ", token);
     console.log("the decoded_id ", decoded_token);
@@ -59,14 +60,22 @@ blog_router.post('/', async (req, res) => {
     user.blogs = user.blogs.concat(saved_blog._id);
     await user.save();
 
-    res.json(saved_blog);
+    res.status(201).json(saved_blog);
 });
 
 blog_router.put('/:id', async (req, res) => {
-    const body = req.body;
     const id = req.params.id;
+    const body = req.body;
 
-    const updated_blog = await Blog.findByIdAndUpdate(id, body, { new: true });
+    const blog = {
+        title : body.title,
+        author : body.author,
+        url : body.url,
+        likes : body.likes,
+        user : body._user
+    }
+
+    const updated_blog = await Blog.findByIdAndUpdate(id, blog, { new: true });
     res.json(updated_blog);
 });
 
@@ -74,9 +83,12 @@ blog_router.delete('/:id', async (req, res) => {
     const id = req.params.id;
     
     const token = get_token_from(req);
-    const decoded_id = jwt.verify(token, process.env.SECRET);
+    if(!token){
+        res.status(401).json({error : "token missing"});
+    }
 
-    if(!decoded_id || !token){
+    const decoded_id = jwt.verify(token, process.env.SECRET);
+    if(!decoded_id){
         res.status(401).json({error : "invalid token"});
     }
     
