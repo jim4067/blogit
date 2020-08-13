@@ -1,8 +1,10 @@
-const Blog = require('../models/blog');
 const blog_router = require('express').Router();
+const Blog = require('../models/blog');
+const User = require('../models/user');
 
 blog_router.get('/', async (req, res) => {
-    const fetched_blogs = await Blog.find({});
+    const fetched_blogs = await Blog.find({})
+                                    .populate('user', {username : 1, name : 1 });
     res.json(fetched_blogs);
 });
 
@@ -18,21 +20,30 @@ blog_router.get('/:id', async (req, res) => {
 });
 
 blog_router.post('/', async (req, res) => {
-    const blog = new Blog(req.body);
+    const body = req.body;
+
+    const user = await User.findById(body.user_id);
+
+    const blog = new Blog({
+        title: body.title,
+        author: body.author,
+        url: body.url,
+        likes: body.likes,
+        user: user._id
+    });
 
     const saved_blog = await blog.save();
-    res.status(201).json(saved_blog);
+    user.blogs = user.blogs.concat(saved_blog._id);
+    await user.save();
+
+    res.json(saved_blog);
 });
 
 blog_router.put('/:id', async (req, res) => {
     const body = req.body;
     const id = req.params.id;
 
-    const blog_to_change = {
-        likes: body.title
-    };
-
-    const updated_blog = await Blog.findByIdAndUpdate(id, blog_to_change, { new: true });
+    const updated_blog = await Blog.findByIdAndUpdate(id, body , { new: true });
     res.json(updated_blog);
 });
 
