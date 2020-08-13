@@ -106,9 +106,10 @@ test("fails with proper status code if wrong token is provided", () => {
     }
 
     const result = await api.post('/api/blogs')
-                            .send(new_blog)
-                            .expect(401)
-                            .expect('Content-type', /application\/json/);
+        .set('Authorization', "feifejf")
+        .send(new_blog)
+        .expect(401)
+        .expect('Content-type', /application\/json/);
 });
 
 afterAll(() => {
