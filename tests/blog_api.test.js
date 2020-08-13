@@ -94,6 +94,9 @@ test("if title and the the url are missing a 400 status code should be returned"
 
 });
 
+//Write also a new test that ensures that adding a blog fails 
+//with proper status code 401 Unauthorized if token is not provided
+
 afterAll(() => {
     mongoose.connection.close();
 });
