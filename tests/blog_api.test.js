@@ -96,6 +96,7 @@ test("if title and the the url are missing a 400 status code should be returned"
 
 //Write also a new test that ensures that adding a blog fails 
 //with proper status code 401 Unauthorized if token is not provided
+//make the test effective by removing the authorization header automatically
 test("fails with proper status code if wrong token is provided", () => {
     const new_blog = {
         title: "i really honestly hate testing",
