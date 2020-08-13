@@ -96,6 +96,19 @@ test("if title and the the url are missing a 400 status code should be returned"
 
 //Write also a new test that ensures that adding a blog fails 
 //with proper status code 401 Unauthorized if token is not provided
+test("fails with proper status code if wrong token is provided", () => {
+    const new_blog = {
+        title: "i really honestly hate testing",
+        author: "James Muttuku",
+        url: "http://www.github.com.jim4067",
+        likes: 1
+    }
+
+    const result = await api.post('/api/blogs')
+                            .send(new_blog)
+                            .expect(401)
+                            .expect('Content-type', /application\/json/);
+});
 
 afterAll(() => {
     mongoose.connection.close();
