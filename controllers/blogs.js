@@ -4,7 +4,7 @@ const Blog = require('../models/blog');
 const middleware = require('../utils/middleware');
 const User = require('../models/user');
 
-blog_router.use(middleware.token_extractor);     //remove this
+//blog_router.use(middleware.token_extractor);     //remove this
 
 blog_router.get('/', async (req, res) => {
     const fetched_blogs = await Blog.find({})
@@ -81,10 +81,10 @@ blog_router.delete('/:id', async (req, res) => {
     }
     
     const blog = await Blog.findById(id);
-    const user = await User.findById(decoded_id.id);
+    const user_id = await User.findById(decoded_id.id);
     
-    if(blog.user.id.toString() === user_id.toString()){             //add that tab here
-        await Blog.findByIdAndDelete(id);
+    if(blog.user.id.toString() === user_id.toString()){             //add that undescore here
+        await Blog.findByIdAndDelete(blog._id);
         res.status(204).end();
     } else {
         console.log("decoded id....",decoded_id)
