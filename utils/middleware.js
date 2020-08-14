@@ -1,6 +1,6 @@
 const logger = require('./logger');
 
-/* annoyingly not working as expected
+/* annoyingly not working as expected because of wrong placement
 const request_logger = (req, res, next) => {
     logger.info("Method", req.method)
     logger.info("Path", req.path)
