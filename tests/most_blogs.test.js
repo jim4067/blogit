@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const most_blogs = require('../utils/list_helper').most_blogs();
 
 const blogs = [
