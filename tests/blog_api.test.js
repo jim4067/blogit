@@ -6,8 +6,8 @@ const Blog = require('../models/blog');
 const api = superstest(app);
 
 const initial_blogs = [
-    { title: "React patterns", author: "Michael Chan", url: "https://reactpatterns.com/", "likes": 7 },
-    { title: "Go To Statement Considered Harmful", author: "Edsger W. Dijkstra", url: "http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html", "likes": 5 }
+    { id: 1, title: "React patterns", author: "Michael Chan", url: "https://reactpatterns.com/", "likes": 7 },
+    { id: 2, title: "Go To Statement Considered Harmful", author: "Edsger W. Dijkstra", url: "http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html", "likes": 5 }
 ]
 
 beforeEach(async () => {
@@ -110,6 +110,17 @@ test("fails with proper status code if wrong token is provided", () => {
         .send(new_blog)
         .expect(401)
         .expect('Content-type', /application\/json/);
+});
+
+test('succeeds with status code 204 if id is valid', async () => {
+    const blog_to_delete = initial_blogs[0];
+
+    await api
+        .delete(`/api/blogs/${blog_to_delete.id}`)                //this might be why my tests for notesApp are failing. the brackets
+        .expect(204)
+
+    const blogs_at_end = initial_blogs;
+    expect(blogs_at_end).toHaveLength(initial_blogs.length - 1);
 });
 
 afterAll(() => {

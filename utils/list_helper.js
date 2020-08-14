@@ -46,6 +46,7 @@ function most_blogs(blogs) {
 module.exports = {
     dummy,
     total_likes,
-    favorite_blog
+    favorite_blog,
+    most_blogs
 }
 
