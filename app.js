@@ -24,11 +24,12 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 
+app.use(middleware.token_extractor);  ///remember that this should run before the routes. ORDER IS VERY IMPORTANT
+
 app.use('/api/blogs', blog_router);
 app.use('/api/login', login_router);
 app.use('/api/users', user_router);
 
-app.use(middleware.token_extractor);
 app.use(middleware.error_handler);
 app.use(middleware.unknown_endpoint);
 
