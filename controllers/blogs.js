@@ -81,10 +81,7 @@ blog_router.put('/:id', async (req, res) => {
 blog_router.delete('/:id', async (req, res) => {
     const id = req.params.id;
 
-    const token = get_token_from(req);
-    if (!token) {
-        res.status(401).json({ error: "token missing" });
-    }
+    const token = req.token;
 
     const decoded_id = jwt.verify(token, process.env.SECRET);
     if (!decoded_id) {
@@ -101,6 +98,7 @@ blog_router.delete('/:id', async (req, res) => {
         //console.log("decoded id....", decoded_id)             //returns what is expected
         console.log("the blog.user._id", blog.user._id);
         console.log("the user._id", user._id);
+        console.log("the blog._id is", blog._id);
         res.status(500).end();
     }
 });
