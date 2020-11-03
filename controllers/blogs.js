@@ -14,7 +14,10 @@ blog_router.get('/', async (req, res) => {
 blog_router.get('/:id', async (req, res) => {
     const id = req.params.id;
 
-    const found_blog = await Blog.findById(id);
+    const found_blog = await Blog
+        .findById(id)
+        .populate('user');
+
     if (found_blog) {
         res.json(found_blog);
     } else {
@@ -38,8 +41,8 @@ blog_router.post('/', async (req, res) => {
 
     const decoded_token = jwt.verify(token, process.env.SECRET);
 
-   // console.log("the token is ", token);
-   // console.log("the decoded_id ", decoded_token);
+    // console.log("the token is ", token);
+    // console.log("the decoded_id ", decoded_token);
 
     if (!token || !decoded_token.id) {
         return res.status(401).json({ error: "token missing or invalid" })
