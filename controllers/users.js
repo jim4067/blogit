@@ -7,8 +7,22 @@ user_router.get('/', async (req, res) => {
     const users = await User
         .find({})
         .populate('blogs');
-        
+
     res.json(users);
+});
+
+user_router.get('/:id', async (req, res) => {
+    const { id } = req.params;
+
+    const found_user = await User
+        .findById(id)
+        .populate('blogs');
+        
+    if (found_user) {
+        res.json(found_user);
+    } else {
+        res.status(404).end();
+    }
 });
 
 user_router.post('/', async (req, res) => {
