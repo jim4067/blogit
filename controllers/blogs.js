@@ -65,6 +65,19 @@ blog_router.post('/', async (req, res) => {
     res.status(201).json(saved_blog);
 });
 
+//the route for posting users comments
+blog_router.post('/:id/comments', async (req, res) => {
+    const { id } = req.params;
+    const { comment } = req.body;
+
+    const blog = await Blog.findById(id);
+
+    blog.comments = blog.comments.concat(comment);
+    await blog.save()
+
+    res.json(blog.toJSON())
+});
+
 blog_router.put('/:id', async (req, res) => {
     const id = req.params.id;
     const body = req.body;
