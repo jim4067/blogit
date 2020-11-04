@@ -107,3 +107,6 @@ blog_router.delete('/:id', async (req, res) => {
 });
 
 module.exports = blog_router;
+
+//for adding comments use the following
+//blog_routet.get(/:id/comments) to get all the comments
